@@ -1,7 +1,7 @@
 {
   "name": "pricing-layout",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pricing Plans — a flexbox pricing-card layout built for the freeCodeCamp CSS lab, styled as an industrial tariff sheet.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
