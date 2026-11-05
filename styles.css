@@ -1,7 +1,364 @@
+/* ============================================================
+   PRICING PLANS — "engineering tariff sheet"
+   Palette (5): ink · panel · chalk · muted · signal (+ black
+   borders required by the flexbox spec).
+   Type (2):    Bricolage Grotesque · IBM Plex Mono
+   ============================================================ */
+
 :root {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  --ink: #0d1214;
+  --panel: #171f22;
+  --chalk: #dfe4e0;
+  --muted: #7c8b8a;
+  --signal: #e0561f;
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --edge: 2px;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) clamp(3rem, 8vw, 7rem);
+  background-color: var(--ink);
+  color: var(--chalk);
+  font-family: var(--mono);
+  font-size: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* atmosphere: diagonal drafting hatch + printed-sheet frame (no square grid) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(223, 228, 224, 0.045) 0 1px,
+    transparent 1px 8px
+  );
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(124, 139, 138, 0.28);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+/* vertical marginalia */
+.rail {
+  position: absolute;
+  top: 4.5rem;
+  left: calc(var(--gutter) * -1 + 0.35rem);
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(124, 139, 138, 0.55);
+}
+
+.masthead {
+  padding-left: clamp(0rem, 2vw, 1.75rem);
+}
+
+/* ---------- headline block ---------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  animation: rise 0.7s cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+}
+
+.eyebrow::before {
+  content: "";
+  width: clamp(2.5rem, 8vw, 5.5rem);
+  height: var(--edge);
+  background-color: var(--signal);
+}
+
+h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(3.25rem, 11vw, 8.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin-bottom: clamp(2rem, 5vw, 3.25rem);
+  text-wrap: balance;
+  animation: rise 0.7s cubic-bezier(0.22, 0.8, 0.2, 1) 0.05s backwards;
+}
+
+/* ---------- required flexbox layout ---------- */
+
+.pricing-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+  align-items: stretch;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 200px;
+  border: 2px solid black;
+  position: relative;
+  min-height: clamp(23rem, 30vw, 26.5rem);
+  /* keep every card at exactly the 200px basis regardless of long words */
+  min-width: 0;
+  padding: clamp(1.1rem, 1.7vw, 1.4rem);
+  background-color: var(--panel);
+  box-shadow: 10px 10px 0 0 rgba(0, 0, 0, 0.55);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 0.8, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 0.8, 0.2, 1);
+  animation: rise 0.7s cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+}
+
+/* bottom signal bar that grows on hover */
+.pricing-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 4px;
+  background-color: var(--signal);
+  transition: width 0.4s cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+.pricing-card:hover,
+.pricing-card:focus-within {
+  transform: translate(-4px, -4px);
+  box-shadow: 16px 16px 0 0 rgba(0, 0, 0, 0.7);
+}
+
+.pricing-card:hover::after,
+.pricing-card:focus-within::after {
+  width: 100%;
+}
+
+/* ---------- card contents ---------- */
+
+.tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tier em {
+  font-style: normal;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--signal);
+}
+
+.pricing-card h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 1.85rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-top: clamp(1.5rem, 4vw, 2.75rem);
+  overflow-wrap: anywhere;
+}
+
+.pricing-card p {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.4vw, 1.55rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 0.55rem 0 1.5rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(124, 139, 138, 0.35);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.ledger {
+  list-style: none;
+  margin-bottom: 1.75rem;
+  font-size: 0.78rem;
+  line-height: 1.95;
+  color: var(--muted);
+}
+
+.ledger li {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.ledger li::before {
+  content: "—";
+  color: var(--signal);
+}
+
+.select {
+  align-self: stretch;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(223, 228, 224, 0.35);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: var(--chalk);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.select::after {
+  content: " →";
+}
+
+.select:hover,
+.select:focus-visible {
+  background-color: var(--chalk);
+  border-color: var(--chalk);
+  color: var(--ink);
+}
+
+:where(a):focus-visible {
+  outline: var(--edge) solid var(--signal);
+  outline-offset: 3px;
+}
+
+/* ---------- plan modifiers ---------- */
+
+.basic-plan {
+  order: 0;
+  animation-delay: 0.12s;
+}
+
+.pro-plan {
+  order: 1;
+  flex-grow: 2;
+  animation-delay: 0.2s;
+}
+
+.pro-plan h2,
+.pro-plan p {
+  color: var(--signal);
+}
+
+.pro-plan p {
+  border-bottom-color: rgba(224, 86, 31, 0.4);
+}
+
+.pro-plan .select {
+  background-color: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink);
+}
+
+.pro-plan .select:hover,
+.pro-plan .select:focus-visible {
+  background-color: var(--ink);
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.premium-plan {
+  order: 2;
+  animation-delay: 0.28s;
+}
+
+/* ---------- colophon ---------- */
+
+.colophon {
+  max-width: 46ch;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  line-height: 1.9;
+  color: rgba(124, 139, 138, 0.85);
+  animation: rise 0.7s cubic-bezier(0.22, 0.8, 0.2, 1) 0.36s backwards;
+}
+
+/* ---------- motion ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- narrow viewports ---------- */
+
+@media (max-width: 900px) {
+  .rail {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  /* widen via min-width so the declared flex basis stays intact */
+  .pricing-card {
+    min-width: 100%;
+    min-height: 20rem;
+  }
+}
+
+

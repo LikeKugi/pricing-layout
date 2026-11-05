@@ -1,8 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title>Pricing Plans Layout Page</title>
-</head>
-<body></body>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pricing Plans — Tariff No. 04</title>
+    <meta
+      name="description"
+      content="Three tier pricing structure for the workshop: Basic, Pro and Premium."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <span class="rail" aria-hidden="true">Structure 01 — 03</span>
+
+      <header class="masthead">
+        <p class="eyebrow">Tariff No. 04 · Effective immediately</p>
+        <h1>Pricing Plans</h1>
+
+        <div class="pricing-container">
+          <div class="pricing-card basic-plan">
+            <span class="tier">Tier 01</span>
+            <h2>Basic</h2>
+            <p>$9/month</p>
+            <ul class="ledger">
+              <li>Single workspace</li>
+              <li>Community support</li>
+              <li>2 GB cold storage</li>
+              <li>Monthly export</li>
+            </ul>
+            <a class="select" href="#">Select Basic</a>
+          </div>
+
+          <div class="pricing-card pro-plan">
+            <span class="tier">Tier 02 <em>Most selected</em></span>
+            <h2>Pro</h2>
+            <p>$19/month</p>
+            <ul class="ledger">
+              <li>Five workspaces</li>
+              <li>Priority queue — 4 h</li>
+              <li>50 GB warm storage</li>
+              <li>Weekly export + API</li>
+              <li>Audit trail, 90 days</li>
+            </ul>
+            <a class="select" href="#">Select Pro</a>
+          </div>
+
+          <div class="pricing-card premium-plan">
+            <span class="tier">Tier 03</span>
+            <h2>Premium</h2>
+            <p>$29/month</p>
+            <ul class="ledger">
+              <li>Unlimited workspaces</li>
+              <li>Named engineer — 1 h</li>
+              <li>500 GB hot storage</li>
+              <li>Live sync + webhooks</li>
+              <li>Audit trail, forever</li>
+            </ul>
+            <a class="select" href="#">Select Premium</a>
+          </div>
+        </div>
+
+        <p class="colophon">
+          Figures in USD, billed monthly. Overage metered at $0.04 / GB. Cancel
+          or regrade at any point in the cycle.
+        </p>
+      </header>
+    </main>
+  </body>
 </html>
+
